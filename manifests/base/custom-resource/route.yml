@@ -1,0 +1,13 @@
+apiVersion: api-gateway.gen-ai-cf.intra.hitachi.co.jp/v1
+kind: AppRoute
+metadata:
+  name: oracle-client-test
+  namespace: hitachi-pj-says-usermanaged
+spec:
+  requiredAnyRoles:
+    - developers
+  applicationType: frontend
+  target:
+    service:
+      name: oracle-client-test
+      port: 80

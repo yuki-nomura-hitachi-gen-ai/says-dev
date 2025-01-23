@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: oracle-client-test
+spec:
+  type: NodePort
+  selector:
+    name: oracle-client-test
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 5000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oracle-client-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: oracle-client-test
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        name: oracle-client-test
+        networkpolicy.gen-ai-cf.intra.hitachi.co.jp/allow-access-from-api-gateway: "true"
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+      - name: oracle-client-test
+        image: ghcr.io/yuki-nomura-hitachi-gen-ai/says-dev/oracle-client-test
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        tty: true
+        ports:
+        - containerPort: 5000
+        workingDir: /app
+    restartPolicy: Always
+---
+apiVersion: api-gateway.gen-ai-cf.intra.hitachi.co.jp/v1
+kind: AppRoute
+metadata:
+  name: oracle-client-test
+  namespace: hitachi-pj-says-usermanaged
+spec:
+  requiredAnyRoles:
+    - developers
+  applicationType: frontend
+  target:
+    service:
+      name: oracle-client-test
+      port: 80

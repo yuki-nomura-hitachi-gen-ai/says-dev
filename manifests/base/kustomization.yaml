@@ -1,0 +1,4 @@
+resources:
+  - ./oracle-client-test/oracle-client-test-deployment.yml
+  - ./oracle-client-test/oracle-client-test-service.yml
+  - ./custom-resource/route.yaml
