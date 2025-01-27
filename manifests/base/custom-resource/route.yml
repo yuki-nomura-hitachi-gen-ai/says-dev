@@ -4,6 +4,7 @@ metadata:
   name: oracle-client-test
   namespace: hitachi-pj-says-usermanaged
 spec:
+  applicationName: oracleclienttest
   requiredAnyRoles:
     - developers
   applicationType: frontend
