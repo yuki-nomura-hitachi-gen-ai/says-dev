@@ -19,7 +19,7 @@ spec:
         - name: regcred
       containers:
       - name: oracle-client-test
-        image: ghcr.io/yuki-nomura-hitachi-gen-ai/says-dev/oracle-client-test
+        image: ghcr.io/yuki-nomura-hitachi-gen-ai/says-dev/oracle-client-test:latest
         resources:
           requests:
             memory: "256Mi"
